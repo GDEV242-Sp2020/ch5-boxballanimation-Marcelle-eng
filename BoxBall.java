@@ -18,18 +18,19 @@ import java.awt.geom.*;
 
 public class BoxBall
 {
-    private static final int GRAVITY = 3;  // effect of gravity
-
-    private int ballDegradation = 2;
+  
     private Ellipse2D.Double circle;
     private Color color;
     private int diameter;
     private int xPosition;
     private int yPosition;
-    private final int groundPosition;      // y position of ground
     private Canvas canvas;
-    private int ySpeed = 1;                // initial downward speed
-
+    private int ySpeed = 15;// initial downward speed
+    private int xSpeed = 15; // initial the left to right speed
+    private int topWall;
+    private int leftWall;
+    private int rightWall;
+    private int bottomWall;
     /**
      * Constructor for objects of class BoxBall
      *
@@ -47,7 +48,10 @@ public class BoxBall
         yPosition = yPos;
         color = ballColor;
         diameter = ballDiameter;
-        groundPosition = groundPos;
+        topWall = 0;
+        leftWall = 0;
+        rightWall = 600;
+        bottomWall = 500;
         canvas = drawingCanvas;
     }
 
@@ -77,19 +81,33 @@ public class BoxBall
         erase();
             
         // compute new position
-        ySpeed += GRAVITY;
+        //ySpeed += GRAVITY;
         yPosition += ySpeed;
-        xPosition +=2;
+        xPosition += xSpeed;
 
-        // check if it has hit the ground
-        if(yPosition >= (groundPosition - diameter) && ySpeed > 0) {
-            yPosition = (int)(groundPosition - diameter);
-            ySpeed = -ySpeed + ballDegradation; 
+        if(yPosition >= (500 - diameter)) { // draw again at new position       
+            yPosition = (int)(bottomWall - diameter);
+            ySpeed = -ySpeed;
         }
-
-        // draw again at new position
+        
+       if (xPosition >= (600 - diameter) ){ // check if it has hit the right wall
+        xPosition = (int)(rightWall - diameter);
+            xSpeed = -xSpeed; 
+            //ySpeed -= ySpeed;
+        }
+        
+        
+       if(yPosition <= 0) { // draw again at new position       
+        yPosition = (int)topWall ;
+         ySpeed = -ySpeed;
+        }
+        
+      if(xPosition <=0) { // draw again at new position       
+        xPosition = (int) leftWall;
+          xSpeed = -xSpeed;
+        }
         draw();
-    }    
+       }    
 
     /**
      * return the horizontal position of this ball
