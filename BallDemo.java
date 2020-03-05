@@ -1,14 +1,13 @@
 import java.awt.Color;
-
+import java.util.Random;
+import java.util.HashSet;
+import java.util.ArrayList;
 /**
  * Class BallDemo - a short demonstration showing animation with the 
  * Canvas class. 
  *
- * @author Bill Crosbie
- * @version 2015-March-BB
- *
- * @author Michael Kölling and David J. Barnes
- * @version 2011.07.31
+ * @Marcelle Tamegnon
+ * @ date: 2020/03/05
  */
 
 public class BallDemo   
@@ -21,6 +20,37 @@ public class BallDemo
     public BallDemo()
     {
         myCanvas = new Canvas("Ball Demo", 600, 500);
+    }
+    
+    /**
+     * Takes a parameter and craetes many balls moving in an infinite loop 
+     * giving them different colors every time it is called
+     */
+     public void Boxbounce(int ballNum){
+        myCanvas.setVisible(true);
+        Random random = new Random();
+        Random myColor = new Random();
+        
+        ArrayList colors = new ArrayList<>();
+        int r = random.nextInt(255);
+        int g = random.nextInt(255);
+        int b = random.nextInt(255);
+       Color col =new Color (r,g,b);
+       
+        HashSet<BoxBall> ballSet = new HashSet<BoxBall>();
+       for(int i = 0; i < ballNum; i++){
+            BoxBall ball = new BoxBall(random.nextInt(600/2),
+            random.nextInt(500/2), 10+2*i,col,40, myCanvas);
+            ballSet.add(ball);
+            ball.draw();
+           }
+        boolean finished =  false;
+        while(!ballSet.isEmpty()) {
+            myCanvas.wait(30);           // small delay
+            for(BoxBall ball : ballSet){
+                ball.move();
+            }
+       }
     }
 
     /**
