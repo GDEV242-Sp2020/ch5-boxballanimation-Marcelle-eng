@@ -2,18 +2,15 @@ import java.awt.*;
 import java.awt.geom.*;
 
 /**
- * Class BoxBall - a graphical ball that observes the effect of gravity. The ball
- * has the ability to move. Details of movement are determined by the ball itself. It
- * will fall downwards, accelerating with time due to the effect of gravity, and bounce
- * upward again when hitting the ground.
+ * Class BoxBall -  This class creates four wall that keep the ball(s)
+ * on the screen. It also implements the aouncing and the direction 
+ * of each of them.
  *
- * This movement can be initiated by repeated calls to the "move" method.
+ * This movement can be initia graphical ball that observes the effectated by repeated calls to the "move" method.
  * 
- * @author Michael Kölling (mik)
- * @author David J. Barnes
- * @author Bruce Quig
- *
- * @version 2011.07.31
+ * @author Marcelle Tamegnon 
+ * 
+ * 2020/03/5
  */
 
 public class BoxBall
@@ -38,8 +35,11 @@ public class BoxBall
      * @param yPos  the vertical coordinate of the ball
      * @param ballDiameter  the diameter (in pixels) of the ball
      * @param ballColor  the color of the ball
-     * @param groundPos  the position of the ground (where the wall will bounce)
      * @param drawingCanvas  the canvas to draw this ball on
+     * @field topWall sets the upper limit of the wall
+     * @field leftWall sets the left limit of the wall
+     * @field rightWall sets the right limit of the wall
+     * @field bottomWall sets the lower limit of the wall
      */
     public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor,
                         int groundPos, Canvas drawingCanvas)
@@ -75,7 +75,7 @@ public class BoxBall
     /**
      * Move this ball according to its position and speed and redraw.
      **/
-    public void move()
+     public void move()
     {
         // remove from canvas at the current position
         erase();
@@ -85,25 +85,23 @@ public class BoxBall
         yPosition += ySpeed;
         xPosition += xSpeed;
 
-        if(yPosition >= (500 - diameter)) { // draw again at new position       
+       if(yPosition >= (500 - diameter)) { // draw again at new position and reverse direction       
             yPosition = (int)(bottomWall - diameter);
             ySpeed = -ySpeed;
         }
         
-       if (xPosition >= (600 - diameter) ){ // check if it has hit the right wall
+       if (xPosition >= (600 - diameter) ){ // draw again at new position   and reverse direction  
         xPosition = (int)(rightWall - diameter);
             xSpeed = -xSpeed; 
-            //ySpeed -= ySpeed;
         }
         
-        
-       if(yPosition <= 0) { // draw again at new position       
+       if(yPosition <= 0) { // draw again at new position   and reverse direction    
         yPosition = (int)topWall ;
          ySpeed = -ySpeed;
         }
         
-      if(xPosition <=0) { // draw again at new position       
-        xPosition = (int) leftWall;
+       if(xPosition <=0) { // draw again at new position and reverse direction      
+         xPosition = (int) leftWall;
           xSpeed = -xSpeed;
         }
         draw();
