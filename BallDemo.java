@@ -5,6 +5,9 @@ import java.util.ArrayList;
 /**
  * Class BallDemo - a short demonstration showing animation with the 
  * Canvas class. 
+ * 
+ * the sixe of the balls is a random integer between 0 and 25 pixels. I 
+ * included in the code while creating a new ball.
  *
  * @Marcelle Tamegnon
  * @ date: 2020/03/05
@@ -22,6 +25,8 @@ public class BallDemo
         myCanvas = new Canvas("Ball Demo", 600, 500);
     }
     
+    
+    
     /**
      * Takes a parameter and craetes many balls moving in an infinite loop 
      * giving them different colors every time it is called
@@ -29,22 +34,21 @@ public class BallDemo
      public void Boxbounce(int ballNum){
         myCanvas.setVisible(true);
         Random random = new Random();
-        Random myColor = new Random();
-        
+     
+        HashSet<BoxBall> ballSet = new HashSet<BoxBall>(); 
+         
         ArrayList colors = new ArrayList<>();
         int r = random.nextInt(255);
         int g = random.nextInt(255);
         int b = random.nextInt(255);
        Color col =new Color (r,g,b);
-       
-        HashSet<BoxBall> ballSet = new HashSet<BoxBall>();
        for(int i = 0; i < ballNum; i++){
             BoxBall ball = new BoxBall(random.nextInt(600/2),
-            random.nextInt(500/2), 10+2*i,col,40, myCanvas);
+            random.nextInt(500/2), random.nextInt(25),col,40, myCanvas);
             ballSet.add(ball);
             ball.draw();
-           }
-        boolean finished =  false;
+        }
+         boolean finished =  false;
         while(!ballSet.isEmpty()) {
             myCanvas.wait(30);           // small delay
             for(BoxBall ball : ballSet){
